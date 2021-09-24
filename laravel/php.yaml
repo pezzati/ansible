@@ -1,0 +1,74 @@
+### Install PHP libs and Composer Required for Running Laravel
+---
+- hosts: '{{ nodes }}'
+  become: true
+  become_user: root
+  become_method: sudo
+  tasks:
+    # - name: install nginx
+    #   apt:
+    #     name: nginx
+    #     update_cache: yes
+    # - name: install msyql
+    #   apt:
+    #     name: mysql-server
+    #     update_cache: yes
+    # - name: install php-fpm
+    #   apt:
+    #     name: php-fpm
+    #     update_cache: yes
+    # - name: install php-mysql
+    #   apt:
+    #     name: php-mysql
+    #     update_cache: yes
+    # - name: install php-cli
+    #   apt:
+    #     name: php-cli
+    #     update_cache: yes
+    # - name: install unzip
+    #   apt:
+    #     name: unzip
+    #     update_cache: yes
+    # - name: install php-mbstring
+    #   apt:
+    #     name: php-mbstring
+    #     update_cache: yes
+    # - name: install php-xml
+    #   apt:
+    #     name: php-xml
+    #     update_cache: yes
+    # - name: install php-bcmath
+    #   apt:
+    #     name: php-bcmath
+    #     update_cache: yes
+    # - name: install php-curl
+    #   apt:
+    #     name: php-curl
+    #     update_cache: yes
+    # - name: install php-fpm
+    #   apt:
+    #     name: php-fpm
+    #     update_cache: yes
+    # - name: install php-mysql
+    #   apt:
+    #     name: php-mysql
+    #     update_cache: yes
+    # - name: install php7.4-gd
+    #   apt:
+    #     name: php7.4-gd
+    #     update_cache: yes
+    - name: check if composer isntalled
+      stat:
+        path: /usr/local/bin/composer
+      register: composer_installed
+    - name: get composer-setup
+      get_url:
+        url: https://getcomposer.org/installer
+        dest: /home/pezzati/composer-setup.php
+      when: not composer_installed
+    - name: install composer
+      shell: php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+      when: not composer_installed
+
+
+
